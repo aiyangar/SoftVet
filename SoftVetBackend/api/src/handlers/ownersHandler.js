@@ -6,7 +6,9 @@ const getOwnerByIdHandler = (req, res) => {
     res.status(200).send(`Details of owner with ID: ${ownerId}`);
 };
 const createOwnerHandler = (req, res) => {
-    res.status(201).send('Owner created successfully');
+    const {name, phone, email} = req.body;
+    
+    res.status(201).send(`Owner created successfully with Name: ${name}, Phone: ${phone}, Email: ${email}`);
 };
 
 module.exports = {
