@@ -1,6 +1,6 @@
 # SoftVet
 
-SoftVet es una aplicación backend desarrollada en Python con FastAPI para la gestión integral de clínicas veterinarias.
+SoftVet es una aplicación backend desarrollada en JavaScript con Node.js para la gestión integral de clínicas veterinarias.
 
 ## Características
 
@@ -12,8 +12,8 @@ SoftVet es una aplicación backend desarrollada en Python con FastAPI para la ge
 
 ## Tecnologías
 
-- Python 3.x
-- Framework web: FastAPI
+- JavaScript (ES6+)
+- Framework web: Node.js con Express
 - Base de datos: SQLite / PostgreSQL
 
 ## Instalación
@@ -25,11 +25,11 @@ SoftVet es una aplicación backend desarrollada en Python con FastAPI para la ge
     ```
 2. Instala las dependencias:
     ```bash
-    pip install -r requirements.txt
+    npm install
     ```
 3. Ejecuta la aplicación:
     ```bash
-    uvicorn app:app --reload
+    npm start
     ```
 
 ## Uso

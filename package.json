@@ -1,0 +1,12 @@
+{
+  "name": "softvet",
+  "version": "1.0.0",
+  "description": "SoftVet es una aplicación backend desarrollada en JavaScript con Node.js para la gestión integral de clínicas veterinarias.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
