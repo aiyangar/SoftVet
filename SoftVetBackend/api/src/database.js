@@ -26,6 +26,12 @@ fs.readdirSync(modelsDir)
         modelDefiner(sequelize);
     });
 
+// Establecer relaciones entre modelos
+const { Pets, Owners } = sequelize.models;
+Owners.hasMany(Pets, { foreignKey: 'ownerId' });
+Pets.belongsTo(Owners, { foreignKey: 'ownerId' });
+
 module.exports = {
+    ...sequelize.models,
     conn: sequelize
 }
