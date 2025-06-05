@@ -1,12 +1,23 @@
-const {createPetDB} = require('../controllers/petsController');
+const {
+    getPetById,
+    createPetDB
+} = require('../controllers/petsController');
 
 const getPetsHandler = (req, res) => {
     res.status(200).send('List of pets');
 };
+
 const getPetByIdHandler = (req, res) => {
     const petId = req.params.id;
-    res.status(200).send(`Details of pet with ID: ${petId}`);
+    
+    try {
+        const response = getPetById(petId);
+        res.status(200).json(response);
+    } catch (error) {
+        return res.status(400).json({error: error.message});
+    }
 };
+
 const createPetHandler = (req, res) => {
     const {name, species, breed, age, ownerId} = req.body;
 
