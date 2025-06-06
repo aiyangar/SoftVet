@@ -2,7 +2,6 @@
 const express = require('express');
 const morgan = require('morgan');
 const mainRouter = require('./routes/mainRouter');
-const cors = require('cors');
 
 // Inicializa la aplicación de Express
 const app = express();
