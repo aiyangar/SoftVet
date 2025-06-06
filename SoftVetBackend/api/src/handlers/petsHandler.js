@@ -4,7 +4,7 @@ const {
 } = require('../controllers/petsController');
 
 const getPetsHandler = (req, res) => {
-    res.status(200).send('List of pets');
+    return res.status(200).send('List of pets');
 };
 
 const getPetByIdHandler = (req, res) => {
@@ -12,7 +12,7 @@ const getPetByIdHandler = (req, res) => {
     
     try {
         const response = getPetById(petId);
-        res.status(200).json(response);
+        return res.status(200).json(response);
     } catch (error) {
         return res.status(400).json({error: error.message});
     }
@@ -23,7 +23,7 @@ const createPetHandler = (req, res) => {
 
     try {
         const response = createPetDB(name, species, breed, age, ownerId);
-        res.status(201).json(response);
+        return res.status(201).json(response);
     } catch (error) {
         return res.status(500).json({error: error.message});
     }
