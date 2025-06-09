@@ -1,14 +1,19 @@
-const { Pets } = require('../database');
+const { Pet } = require('../database');
 
 const getPetById = async (id) => {
-    return await Pets.findByPk(id);
+    return await Pet.findByPk(id);
 }
 
-const createPetDB = async (name, species, breed, age, ownerId) => {
-    return await Pets.create({name, species, breed, age, ownerId});
+const createPetDB = async (petData) => {
+    return await Pet.create(petData);
+}
+
+const getAllPets = async (options = {}) => {
+    return await Pet.findAll(options);
 }
 
 module.exports = {
+    getAllPets,
     getPetById,
     createPetDB,
 }

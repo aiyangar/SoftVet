@@ -2,24 +2,21 @@
 const {
     getAllOwners,
     getOwnerByID,
-    createOwnerDB
+    createOwnerDB,
+    createOwnersBulk
 } = require('../controllers/ownersController')
 const { Op } = require('sequelize');
+const { Owner } = require('../database');
 
 // Handler para obtener dueños con filtros OR (name, phone, email) y búsquedas insensibles a mayúsculas/minúsculas
 const getOwnersHandler = async (req, res) => {
-    const { name, phone, email } = req.query;
     try {
-        // Construye dinámicamente el array de condiciones para un OR
         const orFilters = [];
-        if (name) orFilters.push({ name: { [Op.iLike]: `%${name}%` } });
-        if (phone) orFilters.push({ phone: { [Op.iLike]: `%${phone}%` } });
-        if (email) orFilters.push({ email: { [Op.iLike]: `%${email}%` } });
-
-        // Si hay filtros, aplica OR; si no, trae todos los dueños
+        for (const [key, value] of Object.entries(req.query)) {
+            orFilters.push({ [key]: { [Op.iLike]: `%${value}%` } });
+        }
         const where = orFilters.length ? { [Op.or]: orFilters } : undefined;
         const response = await getAllOwners(where ? { where } : {});
-
         return res.status(200).json(response);
     } catch (error) {
         return res.status(400).json({ error: error.message });
@@ -47,9 +44,20 @@ const createOwnerHandler = async (req, res) => {
     }
 };
 
+// Handler para crear varios dueños (bulk)
+const createOwnersBulkHandler = async (req, res) => {
+    try {
+        const response = await createOwnersBulk(req.body);
+        return res.status(201).json(response);
+    } catch (error) {
+        return res.status(400).json({ error: error.message });
+    }
+};
+
 // Exporta los handlers para ser usados en las rutas
 module.exports = {
     getOwnersHandler,
     getOwnerByIdHandler,
-    createOwnerHandler
+    createOwnerHandler,
+    createOwnersBulkHandler
 };

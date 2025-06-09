@@ -16,9 +16,15 @@ const createOwnerDB = async (ownerData) => {
     return await Owner.create(ownerData);
 }
 
+// Crea varios dueños en la base de datos (bulk create)
+const createOwnersBulk = async (ownersData) => {
+    return await Owner.bulkCreate(ownersData);
+}
+
 // Exporta las funciones del controlador para ser usadas en los handlers
 module.exports = {
     getAllOwners,
     getOwnerByID,
     createOwnerDB,
+    createOwnersBulk
 }
