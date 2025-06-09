@@ -39,9 +39,8 @@ const getOwnerByIdHandler = async (req, res) => {
 
 // Handler para crear un nuevo dueño
 const createOwnerHandler = async (req, res) => {
-    const {name, phone, email} = req.body;
     try {
-        const response = await createOwnerDB(name, email, phone);
+        const response = await createOwnerDB(req.body);
         return res.status(201).json(response);
     } catch (error) {
         return res.status(400).json({error: error.message});

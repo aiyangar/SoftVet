@@ -1,19 +1,19 @@
 // Importa el modelo Owners desde la base de datos
-const { Owners } = require('../database');
+const { Owner } = require('../database');
 
 // Obtiene todos los dueños, permitiendo pasar opciones de filtrado
 const getAllOwners = async (options = {}) => {
-    return await Owners.findAll(options);
+    return await Owner.findAll(options);
 }
 
 // Obtiene un dueño por su ID primario
 const getOwnerByID = async (id) => {
-    return await Owners.findByPk(id);
+    return await Owner.findByPk(id);
 }
 
 // Crea un nuevo dueño en la base de datos
-const createOwnerDB = async (name, email, phone) => {
-    return await Owners.create({name, email, phone});
+const createOwnerDB = async (ownerData) => {
+    return await Owner.create(ownerData);
 }
 
 // Exporta las funciones del controlador para ser usadas en los handlers
