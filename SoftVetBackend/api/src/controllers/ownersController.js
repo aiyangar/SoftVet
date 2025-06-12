@@ -18,6 +18,21 @@ const createOwnerDB = async (ownerData) => {
 
 // Crea varios dueños en la base de datos (bulk create)
 const createOwnersBulk = async (ownersData) => {
+    const errors = [];
+
+    if (ownersData.length === 0) {
+        errors.push(new Error('No se proporcionaron datos de dueños'));
+    }
+
+    for (const owner of ownersData) {
+        if (!owner.firstName || !owner.lastName || !owner.primaryPhone || !owner.email) {
+            errors.push(new Error('Nombre completo, teléfono y correo electrónico son obligatorios'));
+        }
+    }
+    
+    if (errors.length > 0) {
+        throw new Error('Errores de validación: ' + errors.map(e => e.message).join(', '));
+    }
     return await Owner.bulkCreate(ownersData);
 }
 
