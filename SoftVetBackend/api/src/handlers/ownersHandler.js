@@ -6,7 +6,6 @@ const {
     createOwnersBulk
 } = require('../controllers/ownersController')
 const { Op } = require('sequelize');
-const { Owner } = require('../database');
 
 // Handler para obtener dueños con filtros OR (name, phone, email) y búsquedas insensibles a mayúsculas/minúsculas
 const getOwnersHandler = async (req, res) => {
