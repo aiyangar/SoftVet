@@ -29,6 +29,22 @@ const createOwnersBulk = async (ownersData) => {
             errors.push(new Error('Nombre completo, teléfono y correo electrónico son obligatorios'));
         }
     }
+
+    // Generar un RegExp para validar el formato del correo electrónico
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    for (const owner of ownersData) {
+        if (owner.email && !emailRegex.test(owner.email)) {
+            errors.push(new Error(`El correo electrónico ${owner.email} no es válido`));
+        }
+    }
+
+    // Validar que el número de teléfono sea un número válido
+    const phoneRegex = /^\d{10,15}$/; // Ajusta el regex según tus necesidades
+    for (const owner of ownersData) {
+        if (owner.primaryPhone && !phoneRegex.test(owner.primaryPhone)) {
+            errors.push(new Error(`El número de teléfono ${owner.primaryPhone} no es válido`));
+        }
+    }
     
     if (errors.length > 0) {
         throw new Error('Errores de validación: ' + errors.map(e => e.message).join(', '));
