@@ -50,7 +50,7 @@ const createOwnersBulk = async (ownersData) => {
         throw new Error('Errores de validación: ' + errors.map(e => e.message).join(', '));
     }
     return await Owner.bulkCreate(ownersData);
-}
+} 
 
 // Actualiza un dueño existente en la base de datos
 const updateOwnerDB = async (id, ownerData) => {
@@ -60,6 +60,8 @@ const updateOwnerDB = async (id, ownerData) => {
     }
     return await owner.update(ownerData);
 }
+
+//comentario chido importante
 
 // Elimina un dueño de la base de datos
 const deleteOwnerDB = async (id) => {
