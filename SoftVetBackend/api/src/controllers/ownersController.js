@@ -1,5 +1,6 @@
 // Importa el modelo Owners desde la base de datos
 const { Owner } = require('../database');
+const { validatePerson } = require('../validators/validateDB');
 
 // Obtiene todos los dueños, permitiendo pasar opciones de filtrado
 const getAllOwners = async (options = {}) => {
@@ -13,6 +14,10 @@ const getOwnerByID = async (id) => {
 
 // Crea un nuevo dueño en la base de datos
 const createOwnerDB = async (ownerData) => {
+
+    if (validatePerson(ownerData) !== true) {
+        throw new Error(validatePerson(ownerData));
+    }
     return await Owner.create(ownerData);
 }
 
