@@ -32,6 +32,15 @@ const validatePerson = (ownerData) => {
     return errors || true;
 }
 
+const validateIfExists = async (model, id) => {
+    const exists = await model.findByPk(id);
+    if (!exists) {
+        throw new Error(`${model.name} no encontrado`);
+    }
+    return exists;
+}
+
 module.exports = {
-    validatePerson
+    validatePerson,
+    validateIfExists
 }

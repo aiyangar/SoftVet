@@ -1,6 +1,9 @@
 // Importa el modelo Owners desde la base de datos
 const { Owner } = require('../database');
-const { validatePerson } = require('../validators/validateDB');
+const { 
+    validatePerson, 
+    validateIfExists 
+} = require('../validators/validateDB');
 
 // Obtiene todos los dueños, permitiendo pasar opciones de filtrado
 const getAllOwners = async (options = {}) => {
@@ -14,7 +17,7 @@ const getOwnerByID = async (id) => {
 
 // Crea un nuevo dueño en la base de datos
 const createOwnerDB = async (ownerData) => {
-
+    //validar que los datos sean válidos usando validatePerson
     if (validatePerson(ownerData) !== true) {
         throw new Error(validatePerson(ownerData));
     }
@@ -34,22 +37,19 @@ const createOwnersBulk = async (ownersData) => {
 
 // Actualiza un dueño existente en la base de datos
 const updateOwnerDB = async (id, ownerData) => {
-    const owner = await getOwnerByID(id);
-    if (!owner) {
-        throw new Error('Propietario no encontrado');
-    }
+    //validar que el dueño exista
+    const owner = await validateIfExists(Owner, id);
     return await owner.update(ownerData);
 }
 
-//comentario chido importante
-
 // Elimina un dueño de la base de datos
 const deleteOwnerDB = async (id) => {
-    const owner = await getOwnerByID(id);
-    if (!owner) {
-        throw new Error('Propietario no encontrado');
-    }
-    return await owner.destroy();
+    //validar que el dueño exista
+    const owner = await validateIfExists(Owner, id);
+
+    // destruir el dueño si éste existe y enviar un mensaje de éxito
+    await owner.destroy();
+    return { message: 'Dueño eliminado correctamente' };
 }
 
 // Exporta las funciones del controlador para ser usadas en los handlers
