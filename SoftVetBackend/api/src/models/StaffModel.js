@@ -18,6 +18,56 @@ module.exports = (sequelize) => {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
+            // Full Address (Text)
+            address: {
+                type: DataTypes.STRING,
+                allowNull: true, // Assuming it can be null
+            },
+            // City (Text)
+            city: {
+                type: DataTypes.STRING,
+                allowNull: true,
+            },
+            // State/Province (Text)
+            state: {
+                type: DataTypes.STRING,
+                allowNull: true,
+            },
+            // Postal Code (Text)
+            postalCode: {
+                type: DataTypes.STRING,
+                allowNull: true,
+            },
+            // Primary Phone (Text)
+            primaryPhone: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            },
+            // Secondary Phone (Text, Nullable)
+            secondaryPhone: {
+                type: DataTypes.STRING,
+                allowNull: true,
+            },
+            // Email (Text, Unique)
+            email: {
+                type: DataTypes.STRING,
+                allowNull: false,
+                unique: true,
+                validate: {
+                    isEmail: true, // Model-level validation
+                },
+            },
+            // Additional Notes (Long Text, Nullable)
+            additionalNotes: {
+                type: DataTypes.TEXT, // Using TEXT for long strings
+                allowNull: true,
+            },
+            // Status of the employee
+            status: {
+                type: DataTypes.ENUM('Active', 'Inactive', 'On Leave'),
+                allowNull: false,
+                defaultValue: 'Active',
+            },
             // Role within the clinic (e.g., Veterinarian, Technician, Receptionist)
             role: {
                 type: DataTypes.ENUM(
@@ -33,24 +83,6 @@ module.exports = (sequelize) => {
                 type: DataTypes.STRING,
                 allowNull: true,
                 unique: true,
-            },
-            email: {
-                type: DataTypes.STRING,
-                allowNull: false,
-                unique: true,
-                validate: {
-                    isEmail: true,
-                },
-            },
-            phone: {
-                type: DataTypes.STRING,
-                allowNull: true,
-            },
-            // Status of the employee
-            status: {
-                type: DataTypes.ENUM('Active', 'Inactive', 'On Leave'),
-                allowNull: false,
-                defaultValue: 'Active',
             },
         },{
             // Model options

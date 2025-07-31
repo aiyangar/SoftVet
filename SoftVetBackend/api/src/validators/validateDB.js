@@ -1,5 +1,6 @@
 const validatePerson = (ownerData) => {
     const errors = {}
+    
     if (!ownerData) {
         errors.ownerData = 'No se proporcionaron datos de dueño';
     }

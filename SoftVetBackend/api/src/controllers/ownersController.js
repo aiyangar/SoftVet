@@ -23,36 +23,11 @@ const createOwnerDB = async (ownerData) => {
 
 // Crea varios dueños en la base de datos (bulk create)
 const createOwnersBulk = async (ownersData) => {
-    const errors = [];
-
-    if (ownersData.length === 0) {
-        errors.push(new Error('No se proporcionaron datos de dueños'));
-    }
-
+    //validar que los datos sean válidos usando validatePerson
     for (const owner of ownersData) {
-        if (!owner.firstName || !owner.lastName || !owner.primaryPhone || !owner.email) {
-            errors.push(new Error('Nombre completo, teléfono y correo electrónico son obligatorios'));
+        if (validatePerson(owner) !== true) {
+            throw new Error(validatePerson(owner));
         }
-    }
-
-    // Generar un RegExp para validar el formato del correo electrónico
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    for (const owner of ownersData) {
-        if (owner.email && !emailRegex.test(owner.email)) {
-            errors.push(new Error(`El correo electrónico ${owner.email} no es válido`));
-        }
-    }
-
-    // Validar que el número de teléfono sea un número válido
-    const phoneRegex = /^\d{10,15}$/; // Ajusta el regex según tus necesidades
-    for (const owner of ownersData) {
-        if (owner.primaryPhone && !phoneRegex.test(owner.primaryPhone)) {
-            errors.push(new Error(`El número de teléfono ${owner.primaryPhone} no es válido`));
-        }
-    }
-    
-    if (errors.length > 0) {
-        throw new Error('Errores de validación: ' + errors.map(e => e.message).join(', '));
     }
     return await Owner.bulkCreate(ownersData);
 } 
