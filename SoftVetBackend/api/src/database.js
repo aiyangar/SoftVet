@@ -14,7 +14,7 @@ const {
     DB_HOST,
     DB_PORT,
     DB_NAME
-} = process.env;
+} = process.env; 
 
 // Inicializa la instancia de Sequelize para conectarse a PostgreSQL
 const sequelize = new Sequelize(

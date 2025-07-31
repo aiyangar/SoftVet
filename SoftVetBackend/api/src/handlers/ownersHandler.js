@@ -36,6 +36,11 @@ const getOwnerByIdHandler = async (req, res) => {
 // Handler para crear un nuevo dueño
 const createOwnerHandler = async (req, res) => {
     try {
+        // Verificar que se proporcionaron datos
+        if (!req.body || Object.keys(req.body).length === 0) {
+            return res.status(400).json({ error: 'No se proporcionaron datos para crear el dueño' });
+        }
+        
         const response = await createOwnerDB(req.body);
         return res.status(201).json(response);
     } catch (error) {
@@ -46,6 +51,11 @@ const createOwnerHandler = async (req, res) => {
 // Handler para crear varios dueños (bulk)
 const createOwnersBulkHandler = async (req, res) => {
     try {
+        // Verificar que se proporcionaron datos
+        if (!req.body || !Array.isArray(req.body) || req.body.length === 0) {
+            return res.status(400).json({ error: 'Se requiere un array con datos de dueños para crear múltiples registros' });
+        }
+        
         const response = await createOwnersBulk(req.body);
         return res.status(201).json(response);
     } catch (error) {

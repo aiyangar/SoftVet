@@ -36,6 +36,11 @@ const getStaffByIdHandler = async (req, res) => {
 // Handler para crear un nuevo empleado
 const createStaffHandler = async (req, res) => {
     try {
+        // Verificar que se proporcionaron datos
+        if (!req.body || Object.keys(req.body).length === 0) {
+            return res.status(400).json({ error: 'No se proporcionaron datos para crear el empleado' });
+        }
+        
         const response = await createStaffDB(req.body);
         return res.status(201).json(response);
     } catch (error) {
@@ -46,6 +51,11 @@ const createStaffHandler = async (req, res) => {
 // Handler para crear varios empleados (bulk)
 const createStaffBulkHandler = async (req, res) => {
     try {
+        // Verificar que se proporcionaron datos
+        if (!req.body || !Array.isArray(req.body) || req.body.length === 0) {
+            return res.status(400).json({ error: 'Se requiere un array con datos de empleados para crear múltiples registros' });
+        }
+        
         const response = await createStaffBulk(req.body);
         return res.status(201).json(response);
     } catch (error) {

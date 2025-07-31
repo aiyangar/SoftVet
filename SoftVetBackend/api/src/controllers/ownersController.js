@@ -18,8 +18,9 @@ const getOwnerByID = async (id) => {
 // Crea un nuevo dueño en la base de datos
 const createOwnerDB = async (ownerData) => {
     //validar que los datos sean válidos usando validatePerson
-    if (validatePerson(ownerData) !== true) {
-        throw new Error(validatePerson(ownerData));
+    const validationResult = validatePerson(ownerData);
+    if (validationResult !== true) {
+        throw new Error(validationResult);
     }
     return await Owner.create(ownerData);
 }
@@ -28,8 +29,9 @@ const createOwnerDB = async (ownerData) => {
 const createOwnersBulk = async (ownersData) => {
     //validar que los datos sean válidos usando validatePerson
     for (const owner of ownersData) {
-        if (validatePerson(owner) !== true) {
-            throw new Error(validatePerson(owner));
+        const validationResult = validatePerson(owner);
+        if (validationResult !== true) {
+            throw new Error(validationResult);
         }
     }
     return await Owner.bulkCreate(ownersData);

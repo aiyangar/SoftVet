@@ -2,34 +2,39 @@ const validatePerson = (ownerData) => {
     const errors = {}
     
     if (!ownerData) {
-        errors.ownerData = 'No se proporcionaron datos de dueño';
+        return 'Errores de validación: No se proporcionaron datos de dueño';
     }
-    if (!ownerData.firstName || !ownerData.lastName || !ownerData.primaryPhone || !ownerData.email) {
-        if (!ownerData.firstName) {
-            errors.firstName = 'El nombre es obligatorio';
-        }
-        if (!ownerData.lastName) {
-            errors.lastName = 'El apellido es obligatorio';
-        }
-        if (!ownerData.primaryPhone) {
-            errors.primaryPhone = 'El teléfono es obligatorio';
-        }
-        if (!ownerData.email) {
-            errors.email = 'El correo electrónico es obligatorio';
-        }
+    
+    // Validar campos obligatorios (incluyendo strings vacíos y espacios en blanco)
+    if (!ownerData.firstName || ownerData.firstName.trim() === '') {
+        errors.firstName = 'El nombre es obligatorio';
     }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (ownerData.email && !emailRegex.test(ownerData.email)) {
+    if (!ownerData.lastName || ownerData.lastName.trim() === '') {
+        errors.lastName = 'El apellido es obligatorio';
+    }
+    if (!ownerData.primaryPhone || ownerData.primaryPhone.trim() === '') {
+        errors.primaryPhone = 'El teléfono es obligatorio';
+    }
+    if (!ownerData.email || ownerData.email.trim() === '') {
+        errors.email = 'El correo electrónico es obligatorio';
+    }
+    
+    // Validar formato de email solo si existe y no está vacío
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (ownerData.email && ownerData.email.trim() !== '' && !emailRegex.test(ownerData.email)) {
         errors.email = `El correo electrónico ${ownerData.email} no es válido`;
     } 
+    
+    // Validar formato de teléfono solo si existe y no está vacío
     const phoneRegex = /^\d{10,15}$/;
-    if (ownerData.primaryPhone && !phoneRegex.test(ownerData.primaryPhone)) {
+    if (ownerData.primaryPhone && ownerData.primaryPhone.trim() !== '' && !phoneRegex.test(ownerData.primaryPhone)) {
         errors.primaryPhone = `El teléfono ${ownerData.primaryPhone} no es válido`;
     }
+    
     if (Object.keys(errors).length > 0) {
-        throw new Error('Errores de validación: ' + Object.values(errors).join(', '));
+        return 'Errores de validación: ' + Object.values(errors).join(', ');
     }
-    return errors || true;
+    return true;
 }
 
 const validateIfExists = async (model, id) => {

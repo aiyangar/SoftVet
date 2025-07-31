@@ -1,6 +1,6 @@
 // Importa el modelo Staff desde la base de datos
 const { Staff } = require('../database');
-const { validatePerson } = require('../validators/validateDB');
+const { validatePerson, validateIfExists } = require('../validators/validateDB');
 
 // Obtiene todos los empleados, permitiendo pasar opciones de filtrado
 const getAllStaff = async (options = {}) => {
@@ -15,8 +15,9 @@ const getStaffById = async (id) => {
 // Crea un nuevo empleado en la base de datos
 const createStaffDB = async (staffData) => {
     //validar que los datos sean válidos usando validatePerson
-    if (validatePerson(staffData) !== true) {
-        throw new Error(validatePerson(staffData));
+    const validationResult = validatePerson(staffData);
+    if (validationResult !== true) {
+        throw new Error(validationResult);
     }
     return await Staff.create(staffData);
 };
@@ -25,8 +26,9 @@ const createStaffDB = async (staffData) => {
 const createStaffBulk = async (staffData) => {
     //validar que los datos sean válidos usando validatePerson
     for (const staff of staffData) {
-        if (validatePerson(staff) !== true) {
-            throw new Error(validatePerson(staff));
+        const validationResult = validatePerson(staff);
+        if (validationResult !== true) {
+            throw new Error(validationResult);
         }
     }
     return await Staff.bulkCreate(staffData);
